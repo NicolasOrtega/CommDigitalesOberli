@@ -1,0 +1,18 @@
+clear;
+% Prueba de que funciona
+% N1 = 90000;
+% N2 = 70000;
+% estado0 = 500000000000;
+% [u1, estadoN1] = randu(N1,estado0);
+% [u2, estadoN2] = randu(N2,estadoN1);
+% [u, estadoN] = randu(N1+N2,estado0);
+% isequal([u1 u2],u)
+
+% Histograma
+estado0 = 1;
+N = 10e6;
+g = randg(N,estado0);
+histogram(g)
+minimo = min(g)
+maximo = max(g)
+promedio = mean(g)
