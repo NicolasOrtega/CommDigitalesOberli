@@ -1,0 +1,14 @@
+function [u,estadoN] = randu(N,estado0)
+% Prelocalizacion
+u = zeros(1,N); 
+en = u;
+for n=1:N
+    if n==1
+        en(n) = mod(7^5*estado0,2^31-1); % Calcula primer estado
+    else
+        en(n) = mod(7^5*en(n-1),2^31-1); % Calcula estados que siguen
+    end
+    u(n) = en(n)/(2^31-1); % Numeros aleatorios
+end
+estadoN = en(N);
+end
