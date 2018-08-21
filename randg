@@ -1,17 +1,13 @@
-function [g,estadoN] = randg(N,estado0)
+function [g,estadoN] = randg2(N,estado0)
+estadoN = estado0;
 g = zeros(1,N);
 for n=1:N
-    if n==1
-        [u,estadoN] = randu(2,estado0);
-    else
-        [u,estadoN] = randu(2,estadoN);
-    end
+    [u,estadoN] = randu2(2,estadoN);
     s = (2*u(1)-1)^2+(2*u(2)-1)^2;
     while s>=1
-        [u,estadoN] = randu(2,estadoN);
+        [u,estadoN] = randu2(2,estadoN);
         s = (2*u(1)-1)^2+(2*u(2)-1)^2;
     end
     g(n) = (2*u(1)-1)*sqrt(-2*log(s)/s);
 end
 end
-  
