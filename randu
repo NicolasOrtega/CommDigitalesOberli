@@ -1,10 +1,8 @@
 function [u,estadoN] = randu2(N,estado0)
 estadoN = estado0;
 u = zeros(1,N); % Prelocalizacion
-en = u; % Prelocalizacion 
 for n=1:N
     estadoN = mod(7^5*estadoN,2^31-1);
     u(n) = estadoN/(2^31-1);
 end
-estadoN = en(N);
 end
