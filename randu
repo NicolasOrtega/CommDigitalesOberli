@@ -1,4 +1,4 @@
-function [u,estadoN] = randu2(N,estado0)
+function [u,estadoN] = randu(N,estado0)
 estadoN = estado0;
 u = zeros(1,N); % Prelocalizacion
 for n=1:N
