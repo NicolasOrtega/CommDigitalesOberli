@@ -1,4 +1,4 @@
-function [g,estadoN] = randg2(N,estado0)
+function [g,estadoN] = randg(N,estado0)
 estadoN = estado0;
 g = zeros(1,N);
 for n=1:N
