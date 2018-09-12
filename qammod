@@ -1,0 +1,122 @@
+function [s_I,s_Q]=qammod(msj,M)
+bPorSimbolo = log2(M);
+nSim = length(msj)/bPorSimbolo;
+
+jj = 0;
+for ii = 1:nSim
+    msj_paramod(ii,:) = msj(ii+jj:ii+jj+bPorSimbolo-1);
+    jj = jj+bPorSimbolo-1;
+end
+
+% BPSK
+if M == 2
+    for kk = 1:size(msj_paramod,1)
+        if logical(msj_paramod(kk,:)) == 0
+            s_I(kk) = -1;
+            s_Q(kk) = 0;
+        else
+            s_I(kk) = 1;
+            s_Q(kk) = 0;
+        end
+    end
+end
+
+% QPSK
+if M == 4
+    for kk = 1:size(msj_paramod,1)
+        msj_paramod_fila = msj_paramod(kk,:);
+        msj_paramod_fila_I = msj_paramod_fila(1:length(msj_paramod_fila)/2);
+        msj_paramod_fila_Q = msj_paramod_fila(length(msj_paramod_fila)/2+1:end);
+        
+        if logical(msj_paramod_fila_I) == 0
+            s_I(kk) = -1;
+        else
+            s_I(kk) = 1;
+        end
+        if logical(msj_paramod_fila_Q) == 0
+            s_Q(kk) = -1;
+        else
+            s_Q(kk) = 1;
+        end        
+    end
+end
+
+% 16-QAM
+if M == 16
+    for kk = 1:size(msj_paramod,1)
+        msj_paramod_fila = msj_paramod(kk,:);
+        msj_paramod_fila_I = msj_paramod_fila(1:length(msj_paramod_fila)/2);
+        msj_paramod_fila_Q = msj_paramod_fila(length(msj_paramod_fila)/2+1:end);
+        
+        if logical(msj_paramod_fila_I) == logical([0 0])
+            s_I(kk) = -3;
+        elseif logical(msj_paramod_fila_I) == logical([0 1])
+            s_I(kk) = -1;
+        elseif logical(msj_paramod_fila_I) == logical([1 1])
+            s_I(kk) = 1;
+        elseif logical(msj_paramod_fila_I) == logical([1 0])
+            s_I(kk) = 3;    
+        end
+        
+        if logical(msj_paramod_fila_Q) == logical([0 0])
+            s_Q(kk) = -3;
+        elseif logical(msj_paramod_fila_Q) == logical([0 1])
+            s_Q(kk) = -1;
+        elseif logical(msj_paramod_fila_Q) == logical([1 1])
+            s_Q(kk) = 1;
+        elseif logical(msj_paramod_fila_Q) == logical([1 0])
+            s_Q(kk) = 3;    
+        end
+    end
+end
+
+% 64-QAM
+if M == 64
+    for kk = 1:size(msj_paramod,1)
+        msj_paramod_fila = msj_paramod(kk,:);
+        msj_paramod_fila_I = msj_paramod_fila(1:length(msj_paramod_fila)/2);
+        msj_paramod_fila_Q = msj_paramod_fila(length(msj_paramod_fila)/2+1:end);
+        
+        if logical(msj_paramod_fila_I) == logical([0 0 0 ])
+            s_I(kk) = -7;
+        elseif logical(msj_paramod_fila_I) == logical([0 0 1])
+            s_I(kk) = -5;
+        elseif logical(msj_paramod_fila_I) == logical([0 1 1])
+            s_I(kk) = -3;
+        elseif logical(msj_paramod_fila_I) == logical([0 1 0])
+            s_I(kk) = -1;
+        elseif logical(msj_paramod_fila_I) == logical([1 1 0])
+            s_I(kk) = 1;
+        elseif logical(msj_paramod_fila_I) == logical([1 1 1])
+            s_I(kk) = 3;            
+        elseif logical(msj_paramod_fila_I) == logical([1 0 1])
+            s_I(kk) = 5;
+        elseif logical(msj_paramod_fila_I) == logical([1 0 0])
+            s_I(kk) = 7;            
+        end
+        
+        if logical(msj_paramod_fila_Q) == logical([0 0 0 ])
+            s_Q(kk) = -7;
+        elseif logical(msj_paramod_fila_Q) == logical([0 0 1])
+            s_Q(kk) = -5;
+        elseif logical(msj_paramod_fila_Q) == logical([0 1 1])
+            s_Q(kk) = -3;
+        elseif logical(msj_paramod_fila_Q) == logical([0 1 0])
+            s_Q(kk) = -1;
+        elseif logical(msj_paramod_fila_Q) == logical([1 1 0])
+            s_Q(kk) = 1;
+        elseif logical(msj_paramod_fila_Q) == logical([1 1 1])
+            s_Q(kk) = 3;            
+        elseif logical(msj_paramod_fila_Q) == logical([1 0 1])
+            s_Q(kk) = 5;
+        elseif logical(msj_paramod_fila_Q) == logical([1 0 0])
+            s_Q(kk) = 7;            
+        end
+    end
+end
+
+if M ~= 2
+    s_I = s_I/sqrt(2/3*(M-1));
+    s_Q = s_Q/sqrt(2/3*(M-1));
+end
+end
